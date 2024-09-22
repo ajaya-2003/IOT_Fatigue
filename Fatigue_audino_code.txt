@@ -1,0 +1,37 @@
+// Define the pins connected to various components
+const int buzzerPin = 9; // Buzzer connected to pin 9
+const int sensorPin = 2; // IR sensor connected to pin 2
+const int motorPin = 8;  // Motor connected to pin 8
+
+// Variable to store time
+long time;
+
+// Setup function runs once when the program starts
+void setup() {
+    pinMode(motorPin, OUTPUT); // Set motorPin as an OUTPUT
+    pinMode(buzzerPin, OUTPUT); // Set buzzerPin as an OUTPUT
+    pinMode(sensorPin, INPUT);  // Set sensorPin as an INPUT
+
+    // Initially turn on the motor
+    digitalWrite(motorPin, HIGH);
+    digitalWrite(buzzerPin, LOW);
+}
+
+// Loop function runs repeatedly after the setup function
+void loop() {
+    // Check if the IR sensor is triggered (LOW means it's triggered)
+    if (!digitalRead(sensorPin)) {
+        // Sensor is triggered, record the current time
+        time = millis();
+        
+        // Keep the buzzer on and the motor off for 3 seconds
+        digitalWrite(buzzerPin, LOW);
+        digitalWrite(motorPin, LOW);
+        delay(3000); // Wait for 3 seconds
+    } else {
+        // Sensor is not triggered (eyes open)
+        // Keep the motor on and the buzzer off
+        digitalWrite(buzzerPin, HIGH);
+        digitalWrite(motorPin, HIGH);
+    }
+}
